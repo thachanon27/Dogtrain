@@ -6,7 +6,7 @@ import random
 # same as BasicEnv, with one difference: the reward for each action is a normal variable
 # purpose is to see if we can use libraries
 
-class DogEnv(Env):
+class dogEnv2(Env):
 
     def __init__(self):
         # dog runs from 0 to 50, returns from 50 to 0
