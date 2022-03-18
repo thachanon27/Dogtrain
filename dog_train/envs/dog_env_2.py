@@ -1,39 +1,84 @@
-import gym
-from gym import error, spaces, utils
-from gym.utils import seeding
-import numpy as np
+from gym import Env
+from gym import spaces
+from gym.spaces import Box, Discrete
+import random
 
 # same as BasicEnv, with one difference: the reward for each action is a normal variable
 # purpose is to see if we can use libraries
 
-class DogEnv2(gym.Env):
-    metadata = {'render.modes': ['human']}
+class DogEnv(Env):
 
     def __init__(self):
-        # There are two actions, first will get reward of 1, second reward of -1. 
-        self.action_space = spaces.Discrete(5)
-        self.observation_space = spaces.Discrete(2)
+        # dog runs from 0 to 50, returns from 50 to 0
+        self.obs_space = Box(low=0, high=100, shape=(1,))
+
+        # amount of distance travelled
+        self.action_space = spaces.Discrete(3)
+
+        # current state
+        self.state = random.randint(0, 10)
+
+        # no. of rounds
+        self.rounds = 30
+
+        # reward collected
+        self.collected_reward = -1
+
 
     def step(self, action):
-
-        # if we took an action, we were in state 1
-        state = 1
-    
-        reward = np.random.normal(loc = action, scale = action)
-            
-        # regardless of the action, game is done after a single step
-        done = True
-
+        dis = 0
+        done = False
         info = {}
+        rw = 0
+        self.rounds -= 1
 
-        return state, reward, done, info
+        if action == 0:
+            dis = 15
+        elif action == 1:
+            dis = 25
+        elif action == 2:
+            dis = 40
+
+
+        obs = self.state + dis
+
+        if obs < 50:
+            self.collected_reward += -1
+            rw = -1
+        elif obs > 50 and obs < 100:
+            self.collected_reward += 0
+            rw = 0
+        else:
+            self.collected_reward += 1
+            rw = 1
+
+        if self.rounds == 0:
+            done = True
+
+        #self.render(action, rw)
+        self.render(dis, rw)
+        return obs, self.collected_reward, done, info
+
 
     def reset(self):
-        state = 0
-        return state
-  
-    def render(self, mode='human'):
-        pass
+        self.state = 0
+        return self.state
 
-    def close(self):
-        pass
+    def render(self, dis, rw):
+        print(f"Round : {self.rounds}\nDistance Travelled : {dis}\nReward Received: {rw}")
+
+        print(f"Total Reward : {self.collected_reward}")
+    print("=============================================================================")
+
+
+'''
+env = DogEnv()
+
+done = False
+while not done:
+    state = env.reset()
+    action = env.action_space.sample()
+    print("action = ", action)
+    state, reward, done, info = env.step(action)
+   
+ '''
