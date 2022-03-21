@@ -32,7 +32,9 @@ class dogEnv2(Env):
         #self.energy_left = 1500
 
         # no. of rounds
-        self.rounds = 10
+        self.rounds = 0
+        #Goal to stop
+        self.goal_distance = 300
 
         # reward collected
         self.collected_reward = -1
@@ -41,11 +43,11 @@ class dogEnv2(Env):
     def step(self, action):
         dis = 0
         e_use = 0
-        done = False
+        #done = False
         info = {}
         rw1 = 0
         rw2 = 0
-        self.rounds -= 1
+        self.rounds += 1
 
         position, energy_left = self.state
 
@@ -63,17 +65,19 @@ class dogEnv2(Env):
 
         # position = position + dis
         position += dis
+
         # energy_left = self.ini_energy - e_use
         energy_left -= e_use
-        ##สุ่มยังไงก็ได้ให้ตกที่ 160 ในห้ารอบพอดี โดยให้ energy น้อยที่สุด
+
+##สุ่มยังไงก็ได้ให้ตกที่ 160 ในห้ารอบพอดี โดยให้ energy น้อยที่สุด
 
         if position < 140:
             self.collected_reward += -1
             rw1 = -1
-        elif position > 180:
+        elif position >= 180:
             self.collected_reward += -2
             rw1 = -2
-        elif position > 140 and position < 180:   #ถ้าสุ่มจนตกในช่วงนี้ก็จะได้รางวัลใหญ่
+        elif position >= 140 and position < 180:   #ถ้าสุ่มจนตกในช่วงนี้ก็จะได้รางวัลใหญ่
             self.collected_reward += 100
             rw1 = 100
 
@@ -81,7 +85,7 @@ class dogEnv2(Env):
         if energy_left > 200 and energy_left < 800:
             self.collected_reward += 5
             rw2 = -2
-        elif energy_left > 800 and energy_left < 1500:
+        elif energy_left >= 800 and energy_left < 1500:
             self.collected_reward += 0.2
             rw2 =  3
         else:   # obs < 200 = เริ่มใช้พลังงานเยอะไป
@@ -90,8 +94,9 @@ class dogEnv2(Env):
 
         rw = rw1 + rw2
 
-        if self.rounds == 0:
-            done = True
+        #if self.rounds == 0:
+         #   done = True
+        done = bool(position >= self.goal_distance)
 
         self.state = (position,energy_left)
         #self.render(action, rw)
