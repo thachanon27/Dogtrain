@@ -100,7 +100,7 @@ class dogEnv2(Env):
 
         self.state = (position,energy_left)
         #self.render(action, rw)
-        self.render(dis, rw, position, energy_left)
+        self.render(dis, rw, position, energy_left)  
         return np.array(self.state, dtype=np.float32), self.collected_reward, done, info
 
 
