@@ -110,7 +110,7 @@ class dogEnv2(Env):
         print("=============================================================================")
 
 
-
+'''
 env = dogEnv2()
 state = env.reset()
 done = False
@@ -119,6 +119,7 @@ while not done:
     action = env.action_space.sample()
     print("action = ", action)
     state, reward, done, info = env.step(action)
+'''
 
 
 
