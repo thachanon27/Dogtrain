@@ -111,7 +111,7 @@ class dogEnv2(Env):
 
 
 
-env = DogEnv()
+env = dogEnv2()
 state = env.reset()
 done = False
 while not done:
