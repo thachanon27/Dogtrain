@@ -48,6 +48,7 @@ class dogEnv2(Env):
         rw1 = 0
         rw2 = 0
         rw = 0                #พอระยะทางถึง goal 300 แล้ว เริ่ม step ใหม่ ให้เซท reward =0 ด้วย ไม่งั้นมันจะสะสมไปเรื่อยๆ
+        self.collected_reward = 0
         self.rounds += 1
 
         position, energy_left = self.state
@@ -73,24 +74,24 @@ class dogEnv2(Env):
 ##สุ่มยังไงก็ได้ให้ตกที่ 160 ในห้ารอบพอดี โดยให้ energy น้อยที่สุด
 
         if position < 140:
-            self.collected_reward += -1
-            rw1 = -40
+            self.collected_reward += -4
+            rw1 = -4
         elif position >= 180:
-            self.collected_reward += -2
-            rw1 = -40
+            self.collected_reward += -4
+            rw1 = -4
         elif position >= 140 and position < 180:   #ถ้าสุ่มจนตกในช่วงนี้ก็จะได้รางวัลใหญ่
             self.collected_reward += 100
             rw1 = 100
 
 
         if energy_left > 200 and energy_left < 800:
-            self.collected_reward += -20
+            self.collected_reward += -3
             rw2 = -3
         elif energy_left >= 800 and energy_left < 1500:
-            self.collected_reward += 60
+            self.collected_reward += 10
             rw2 =  10
         else:   # obs < 200 = เริ่มใช้พลังงานเยอะไป
-            self.collected_reward += -40
+            self.collected_reward += -5
             rw2 = -5
 
         rw = rw1 + rw2
