@@ -47,6 +47,7 @@ class dogEnv2(Env):
         info = {}
         rw1 = 0
         rw2 = 0
+        rw = 0                #พอระยะทางถึง goal 300 แล้ว เริ่ม step ใหม่ ให้เซท reward =0 ด้วย ไม่งั้นมันจะสะสมไปเรื่อยๆ
         self.rounds += 1
 
         position, energy_left = self.state
