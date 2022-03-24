@@ -58,19 +58,19 @@ class dogEnv2(Env):
 
 
         if action == 0:
-            dis = 10
+            dis = 5
             e_use = 200
         elif action == 1:
-            dis = 20
+            dis = 10
             e_use = 300
         elif action == 2:
-            dis = 40
+            dis = 15
             e_use = 300
         elif action == 3:
-            dis = 60
+            dis = 20
             e_use = 400
         elif action == 4:
-            dis = 100
+            dis = 40
             e_use = 500
 
         # position = position + dis
