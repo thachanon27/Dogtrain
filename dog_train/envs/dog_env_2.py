@@ -37,7 +37,8 @@ class dogEnv2(Env):
         self.goal_distance = 300
 
         # reward collected
-        self.collected_reward = -1
+        self.collected_reward = 0
+        self.cum_rw = 0
 
 
     def step(self, action):
@@ -48,7 +49,8 @@ class dogEnv2(Env):
         rw1 = 0
         rw2 = 0
         rw = 0                #พอระยะทางถึง goal 300 แล้ว เริ่ม step ใหม่ ให้เซท reward =0 ด้วย ไม่งั้นมันจะสะสมไปเรื่อยๆ
-        self.collected_reward = 0
+        #cum_rw = 0
+        #self.collected_reward = 0
         self.rounds += 1
 
         position, energy_left = self.state
@@ -104,14 +106,14 @@ class dogEnv2(Env):
             rw2 = -5
 
         rw = rw1 + rw2
-
+        self.cum_rw += rw
         #if self.rounds == 0:
          #   done = True
         done = bool(position >= self.goal_distance)
 
         self.state = (position,energy_left)
         #self.render(action, rw)
-        #self.render(dis, rw, position, energy_left)  
+        #self.render(dis, rw, position, energy_left)        # ถ้าจะให้ปริ้นผลรัน ให้เอา # หน้าบรรทัดนี้ออก
         return np.array(self.state, dtype=np.float32), self.collected_reward, done, info
 
 
@@ -122,10 +124,11 @@ class dogEnv2(Env):
     def render(self, dis, rw, position, energy_left):
         print(f"Round : {self.rounds}\nDistance Travelled : {dis}\nReward Received: {rw} \nPosition of dog : {position}\nDogEnergyLeft: {energy_left} ")
 
-        print(f"Total Reward : {self.collected_reward}")
+        print(f"Total Reward : {self.collected_reward}\nTotal Cum reward : {self.cum_rw}")
         print("=============================================================================")
 
 
+#ถ้าจะให้แสดงผลให้เอา ''' ข้างล่างออกด้วย 
 '''
 env = dogEnv2()
 state = env.reset()
@@ -135,6 +138,7 @@ while not done:
     action = env.action_space.sample()
     print("action = ", action)
     state, reward, done, info = env.step(action)
+    
 '''
 
 
