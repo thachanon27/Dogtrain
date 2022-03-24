@@ -80,14 +80,17 @@ class dogEnv2(Env):
 ##สุ่มยังไงก็ได้ให้ตกที่ 160 ในห้ารอบพอดี โดยให้ energy น้อยที่สุด
 
         if position < 140:
-            self.collected_reward += -4
-            rw1 = -4
+            self.collected_reward += -10
+            rw1 = -10
         elif position >= 200:
-            self.collected_reward += -4
+            self.collected_reward += -20
             rw1 = -20
+        elif position >= 250:
+            self.collected_reward += -40
+            rw1 = -40
         elif position >= 140 and position < 200:   #ถ้าสุ่มจนตกในช่วงนี้ก็จะได้รางวัลใหญ่
-            self.collected_reward += 100
-            rw1 = 100
+            self.collected_reward += 120
+            rw1 = 120
 
 
         if energy_left > 200 and energy_left < 800:
