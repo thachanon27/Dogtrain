@@ -99,8 +99,8 @@ class dogEnv2(Env):
             self.collected_reward += -1
             rw2 = -1
         elif energy_left >= 800 :
-            self.collected_reward += 10
-            rw2 =  10
+            self.collected_reward += 1
+            rw2 =  1
         else:   # obs < 200 = เริ่มใช้พลังงานเยอะไป
             self.collected_reward += -1
             rw2 = -1
