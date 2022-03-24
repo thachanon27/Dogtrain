@@ -34,7 +34,7 @@ class dogEnv2(Env):
         # no. of rounds
         self.rounds = 0
         #Goal to stop
-        self.goal_distance = 300
+        self.goal_distance = 200
 
         # reward collected
         self.collected_reward = 0
@@ -81,18 +81,21 @@ class dogEnv2(Env):
 
 ##สุ่มยังไงก็ได้ให้ตกที่ 160 ในห้ารอบพอดี โดยให้ energy น้อยที่สุด
 
-        if position < 140:
+        if position < 80:
+            self.collected_reward += -1
+            rw1 = -2
+        elif position < 100:
             self.collected_reward += -1
             rw1 = -1
-        elif position >= 200:
-            self.collected_reward += -1
-            rw1 = -1
-        elif position >= 250:
+        elif position < 140:
             self.collected_reward += -1
             rw1 = -1
         elif position >= 140 and position < 200:   #ถ้าสุ่มจนตกในช่วงนี้ก็จะได้รางวัลใหญ่
-            self.collected_reward += 120
-            rw1 = 120
+            self.collected_reward += 50
+            rw1 = 50
+        else:
+            self.collected_reward += -1
+            rw1 = -1
 
 
         if energy_left >= 200 and energy_left < 800:
