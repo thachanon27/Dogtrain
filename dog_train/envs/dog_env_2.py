@@ -84,7 +84,7 @@ class dogEnv2(Env):
             rw1 = -4
         elif position >= 200:
             self.collected_reward += -4
-            rw1 = -4
+            rw1 = -20
         elif position >= 140 and position < 200:   #ถ้าสุ่มจนตกในช่วงนี้ก็จะได้รางวัลใหญ่
             self.collected_reward += 100
             rw1 = 100
