@@ -119,7 +119,8 @@ class dogEnv2(Env):
 
     def reset(self):
         self.state = np.array([np.random.uniform(low=0, high=20),np.random.uniform(low=1000, high=1500)])
-        return self.state
+        self.collected_reward = 0
+        return self.state, self.collected_reward
 
     def render(self, dis, rw, position, energy_left):
         print(f"Round : {self.rounds}\nDistance Travelled : {dis}\nReward Received: {rw} \nPosition of dog : {position}\nDogEnergyLeft: {energy_left} ")
