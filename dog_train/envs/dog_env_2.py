@@ -25,7 +25,7 @@ class dogEnv2(Env):
         self.observation_space = spaces.Box(self.low, self.high, dtype=np.float32)
 
         # amount of distance travelled
-        self.action_space = spaces.Discrete(3)
+        self.action_space = spaces.Discrete(5)
 
         # current begin state
         #self.position = random.randint(0, 10)
@@ -64,6 +64,12 @@ class dogEnv2(Env):
         elif action == 2:
             dis = 40
             e_use = 300
+        elif action == 3:
+            dis = 60
+            e_use = 400
+        elif action == 4:
+            dis = 100
+            e_use = 500
 
         # position = position + dis
         position += dis
@@ -76,10 +82,10 @@ class dogEnv2(Env):
         if position < 140:
             self.collected_reward += -4
             rw1 = -4
-        elif position >= 180:
+        elif position >= 200:
             self.collected_reward += -4
             rw1 = -4
-        elif position >= 140 and position < 180:   #ถ้าสุ่มจนตกในช่วงนี้ก็จะได้รางวัลใหญ่
+        elif position >= 140 and position < 200:   #ถ้าสุ่มจนตกในช่วงนี้ก็จะได้รางวัลใหญ่
             self.collected_reward += 100
             rw1 = 100
 
